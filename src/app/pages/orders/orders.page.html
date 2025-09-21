@@ -1,0 +1,216 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-xs="2">
+          <ion-buttons>
+            <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+        </ion-col>
+        <ion-col size-xs="6">
+          <input type="text" 
+          class="mySearchInput" 
+          id="orderDataInput" 
+          (keyup)="filterOrdersPage()" 
+          placeholder="Search orders..">
+       </ion-col>
+        <ion-col size-xs="3">
+          <ion-button class="filterToggle" expand="block" color="primary" (click)="showFilter()">
+            Filter &nbsp;<ion-icon name="options"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size-xs="1">
+            <img (click)="reloadPWA()" src="/assets/icon/reload-pwa.png">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <div *ngIf="spinner" class="spinnerSection" style="text-align: center;">
+            <ion-spinner name="lines"></ion-spinner>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    
+    <ion-card *ngIf=isHiddenFilter>
+      <ion-card-content>
+        <ion-row>
+          <ion-col size-xs="12">
+            <ion-row class="commonContainer">
+                <ion-col size-lg="12" size-xs="12">
+                  <ion-label>Please Select an Order Status</ion-label>
+                  <ion-select value="brown" 
+                  okText="Okay" 
+                  cancelText="Dismiss" 
+                  [(ngModel)]="selectedOrderStatus" 
+                  (ionChange)="getOrderStatus()">
+
+                    <ion-select-option value="pending">Pending</ion-select-option>
+                    <ion-select-option value="processing">Processing</ion-select-option>
+                    <ion-select-option value="completed">Completed</ion-select-option>
+                    <ion-select-option value="failed">Failed</ion-select-option>
+                    <ion-select-option value="refunded">Refunded</ion-select-option>
+                    <ion-select-option value="cancelled">Cancelled</ion-select-option>
+                    <ion-select-option value="on-hold">On Hold</ion-select-option>
+                  </ion-select>
+                </ion-col>
+
+                <ion-col size-lg="12" size-xs="12">
+                    <ion-button expand="block" [disabled]="dsableBtn" (click)="filterOrderStatus()">
+                      <strong>Filter by Order Status</strong>
+                    </ion-button>
+                </ion-col>
+              </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size-xs="12">
+            <ion-row class="commonContainer">
+                <ion-col size-lg="12" size-xs="12">
+                  <ion-label>Please Select a Month</ion-label>
+                  <ion-select value="brown" 
+                  okText="Okay" 
+                  cancelText="Dismiss" 
+                  [(ngModel)]="selectedMonth" 
+                  (ionChange)="getOrderDate()">
+
+                    <ion-select-option value="1">January</ion-select-option>
+                    <ion-select-option value="2">February</ion-select-option>
+                    <ion-select-option value="3">March</ion-select-option>
+                    <ion-select-option value="4">April</ion-select-option>
+                    <ion-select-option value="5">May</ion-select-option>
+                    <ion-select-option value="6">June</ion-select-option>
+                    <ion-select-option value="7">July</ion-select-option>
+                    <ion-select-option value="8">August</ion-select-option>
+                    <ion-select-option value="9">September</ion-select-option>
+                    <ion-select-option value="10">October</ion-select-option>
+                    <ion-select-option value="11">November</ion-select-option>
+                    <ion-select-option value="12">December</ion-select-option>
+                    
+                  </ion-select>
+                </ion-col>
+
+                <ion-col size-lg="12" size-xs="12">
+                    <ion-button expand="block" [disabled]="dsableBtn" (click)="filterOrderByDate()">
+                      <strong>Filter by Month</strong>
+                    </ion-button>
+                </ion-col>
+              </ion-row>
+          </ion-col>
+        </ion-row>
+        
+      </ion-card-content>
+    </ion-card>
+
+    <ion-row> 
+      <ion-col size-lg="12" size-xs="12">
+        <div *ngIf="noOrders">
+          <p style="text-align: center;">No order matched the filter!</p>
+        </div>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row id="ordersContainer">
+      <ion-col size-lg="4" size-xs="12" *ngFor="let order of allOrders">
+        <ion-card>
+            <ion-card-content>
+              <ion-card-content>
+                <ion-row>
+                  <strong>Name: &nbsp;</strong> {{order.billing.first_name}} {{order.billing.last_name}}
+                </ion-row>
+                <ion-row>
+                  <strong>Order ID: &nbsp;</strong> #{{order.id}}
+                </ion-row>
+                <ion-row>
+                  <strong>Order Date: &nbsp;</strong> {{ order.date_created}}
+                </ion-row>
+                <ion-row>
+                  <strong>Payment Method: &nbsp;</strong> {{ order.payment_method_title}}
+                </ion-row>
+                <ion-row *ngIf="order.status == 'pending'">
+                  <strong>Order Status: &nbsp;</strong> Pending Payment
+                </ion-row>
+                <ion-row *ngIf="order.status == 'completed'">
+                  <strong>Order Status: &nbsp;</strong> Completed
+                </ion-row>
+                <ion-row *ngIf="order.status == 'processing'">
+                  <strong>Order Status: &nbsp;</strong> Processing
+                </ion-row>
+                <ion-row *ngIf="order.status == 'failed'">
+                  <strong>Order Status: &nbsp;</strong> Failed
+                </ion-row>
+                <ion-row *ngIf="order.status == 'refunded'">
+                  <strong>Order Status: &nbsp;</strong> Refunded
+                </ion-row>
+                <ion-row *ngIf="order.status == 'cancelled'">
+                  <strong>Order Status: &nbsp;</strong> Cancelled
+                </ion-row>
+                <ion-row *ngIf="order.status == 'on-hold'">
+                  <strong>Order Status: &nbsp;</strong> On Hold
+                </ion-row>
+                <ion-row>
+                  <strong>Order Total: &nbsp;</strong> KYD ${{ order.total }}
+                </ion-row>
+                <ion-row>
+                  <ion-button color="primary" expand="block" [routerLink]="['/orders',order.id]">View Details</ion-button>
+                </ion-row>
+              </ion-card-content>
+            </ion-card-content>
+          </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="loadMoreAll"> 
+      <ion-col size-lg="12" size-xs="12">
+        <ion-button 
+        expand="block"
+        (click)="loadMoreOrderForAllOrders()"
+        color="primary" [disabled]="loadMoreAllSpinner"
+        ><strong>Tap to Load More</strong
+        ><span *ngIf="loadMoreAllSpinner"><ion-spinner name="lines"></ion-spinner></span
+      ></ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="loadMoreStatus"> 
+      <ion-col size-lg="12" size-xs="12">
+        <ion-button 
+        expand="block"
+        (click)="loadMoreOrderForOrderByStatus()"
+        color="primary" [disabled]="loadMoreStatusSpinner"
+        ><strong>Tap to Load More</strong
+        ><span *ngIf="loadMoreStatusSpinner"><ion-spinner name="lines"></ion-spinner></span
+      ></ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="loadMoreDate"> 
+      <ion-col size-lg="12" size-xs="12">
+        <ion-button 
+        expand="block"
+        (click)="loadMoreOrderForOrderByDate()"
+        color="primary" [disabled]="loadMoreDateSpinner"
+        ><strong>Tap to Load More</strong
+        ><span *ngIf="loadMoreDateSpinner"><ion-spinner name="lines"></ion-spinner></span
+      ></ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>
