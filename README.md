@@ -56,20 +56,6 @@ This hybrid mobile app works on **Android, iOS, and PWA**, and connects to your 
    npm install
    ```
 
----
-
-## 🧠 SEO Keywords
-
-> woocommerce order manager ionic angular
-> woocommerce admin mobile app
-> wordpress woocommerce order management pwa
-> ionic angular woocommerce rest api orders
-> hybrid woocommerce admin app
-> woocommerce android ios order manager
-> open source woocommerce order management app
-
----
-
 ## 🙌 Author
 
 **M A Hasan**
