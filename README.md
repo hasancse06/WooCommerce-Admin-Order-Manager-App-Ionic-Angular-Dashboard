@@ -60,10 +60,16 @@ This hybrid mobile app works on **Android, iOS, and PWA**, and connects to your 
 
 ![Screenshot](admin-ss-1.jpg)
 ![Screenshot](admin-ss-2.jpg)
+
+
 ## 🙌 Author
 
 **M A Hasan**
-🌐 [https://hasan.online](https://hasan.online)
+- 🔭 Full-Stack Web Developer | Ionic Framework, Angular, Node.js & REST APIs
+- 🌐 About Me [https://hasan.online](https://hasan.online)
+- 🎓 Instructor on [Udemy](https://www.udemy.com/user/m-a-hasan-2/)
+- 🧠 Creator at [Envato](https://themeforest.net/user/hasanonline)
+- ✍️ Blogger at [blog.hasan.online](https://blog.hasan.online)
 
 ---
 
