@@ -1,10 +1,11 @@
-# 🛍️ WooCommerce Admin Order Manager App Ionic Angular Dashboard
+# 🛍️ WooCommerce Admin Order Manager App (Ionic + Angular)
 
-### (Ionic + Angular | Hybrid | Android | iOS | PWA)
+### Hybrid Mobile Dashboard for Android, iOS & PWA
 
-An **open-source WooCommerce Order Management Mobile App** built with **Ionic + Angular** that lets store administrators **view, search, filter, and update WooCommerce orders** from anywhere.
+A **free and open-source WooCommerce Order Management App** built with **Ionic + Angular**, designed for store owners and admins to **view, search, filter, and manage WooCommerce orders** anytime, anywhere.
 
-This hybrid mobile app works on **Android, iOS, and PWA**, and connects to your **WooCommerce + WordPress store** using the official **WooCommerce REST API**.
+This lightweight hybrid app seamlessly connects with your **WordPress + WooCommerce store** through the official **WooCommerce REST API**, making order management simple and accessible for everyone.
+
 
 ---
 
