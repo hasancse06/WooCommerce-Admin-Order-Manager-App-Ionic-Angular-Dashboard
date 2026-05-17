@@ -47,7 +47,7 @@ This lightweight hybrid app seamlessly connects with your **WordPress + WooComme
 1. **Clone this repo:**
 
    ```bash
-   git clone https://github.com/YOUR_USERNAME/WooCommerce-Admin-Order-Manager-App-Ionic-Angular-Dashboard.git
+   git clone https://github.com/hasancse06/WooCommerce-Admin-Order-Manager-App-Ionic-Angular-Dashboard.git
    cd WooCommerce-Admin-Order-Manager-App-Ionic-Angular-Dashboard
    ```
 
